@@ -10,3 +10,30 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+bin
+.DS_Store
+.antlr-generator-3.2.0-patch.jar
+target
+*.xtendbin
+*.java._trace
+*.java_trace
+
+.gradle
+build/
+!**/src/**/build/
+!**/xtend-gen/**/build/
+
+
+.settings
+tmp
+bin
+target
+generated
+generated-sources
+src-gen
+xtend-gen
+model
+*.xml_gen
+
+.metadata
