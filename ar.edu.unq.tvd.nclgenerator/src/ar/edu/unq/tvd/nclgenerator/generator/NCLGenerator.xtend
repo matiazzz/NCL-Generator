@@ -39,8 +39,8 @@ class NCLGenerator {
 	def generateMedias() {
 		'''
 		«FOR m: ncl.medias»
-		<media id="«m.name»" «addSrcOrType(m)»
-			«addProperties(m)»
+		<media id="«m.name»" «m.addSrcOrType»
+			«m.addProperties»
 		</media>
 		«ENDFOR»
 		'''

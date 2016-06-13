@@ -25,7 +25,7 @@ class NCLExtensions {
 	}
 	
 	static def addSrcOrType(Media it){
-		if(!hasSource)
+		if(hasSource)
 			'''src="«src»" descriptor="descriptor«name»">'''
 		else
 			'''type="«type»">'''
