@@ -1,0 +1,34 @@
+grammar ar.edu.unq.tvd.nclgenerator.NCLGenerator with org.eclipse.xtext.common.Terminals
+
+generate nCLGenerator "http://www.edu.ar/unq/tvd/nclgenerator/NCLGenerator"
+
+NCL:
+	'name:' name=STRING
+    medias+=Media*
+;
+
+Media:
+    'media' name=ID '{'
+    
+    ('src:' src=STRING region=Region | 'type:' type=STRING)
+    
+    (properties+=Property)*
+
+    //(eventos+=Evento)*
+
+    '}'
+;
+
+Region:
+    'heigth:' heigth=INT
+    'width:' width=INT
+    'top:' top=INT
+    'down:' down=INT
+    'zIndex:' zIndex=INT
+;
+
+Property:
+	'name:' name=STRING 'value:' value=STRING
+;
+
+//Evento: ;

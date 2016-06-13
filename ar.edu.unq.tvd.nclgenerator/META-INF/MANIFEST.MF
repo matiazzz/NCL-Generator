@@ -1,0 +1,29 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ar.edu.unq.tvd.nclgenerator
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: ar.edu.unq.tvd.nclgenerator; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.emf.ecore,
+ org.eclipse.xtext.util,
+ org.antlr.runtime,
+ org.eclipse.xtend.lib,
+ org.eclipse.emf.common,
+ org.eclipse.xtext.xbase.lib
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Export-Package: ar.edu.unq.tvd.nclgenerator.generator,
+ ar.edu.unq.tvd.nclgenerator.scoping,
+ ar.edu.unq.tvd.nclgenerator.nCLGenerator.impl,
+ ar.edu.unq.tvd.nclgenerator.nCLGenerator,
+ ar.edu.unq.tvd.nclgenerator.serializer,
+ ar.edu.unq.tvd.nclgenerator.parser.antlr.internal,
+ ar.edu.unq.tvd.nclgenerator.services,
+ ar.edu.unq.tvd.nclgenerator.nCLGenerator.util,
+ ar.edu.unq.tvd.nclgenerator.validation,
+ ar.edu.unq.tvd.nclgenerator.parser.antlr,
+ ar.edu.unq.tvd.nclgenerator
+Import-Package: org.apache.log4j

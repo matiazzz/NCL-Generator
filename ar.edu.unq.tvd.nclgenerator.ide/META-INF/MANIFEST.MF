@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ar.edu.unq.tvd.nclgenerator.ide
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: ar.edu.unq.tvd.nclgenerator.ide; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: ar.edu.unq.tvd.nclgenerator,
+ org.eclipse.xtext.ide,
+ org.eclipse.xtext.xbase.ide
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Export-Package: ar.edu.unq.tvd.nclgenerator.ide.contentassist.antlr.internal,
+ ar.edu.unq.tvd.nclgenerator.ide.contentassist.antlr
+
