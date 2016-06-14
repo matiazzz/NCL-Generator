@@ -4,14 +4,15 @@ generate nCLGenerator "http://www.edu.ar/unq/tvd/nclgenerator/NCLGenerator"
 
 NCL:
 	'name:' name=STRING
+	regions+=Region*
     medias+=Media*
 ;
 
 Media:
     'media' name=ID '{'
     
-    ('src:' src=STRING region=Region | 'type:' type=STRING)
-    
+    ('src:' src=STRING | 'type:' type=STRING)
+    ('region' '=' region=[Region])?
     (properties+=Property)*
 
     //(eventos+=Evento)*
@@ -19,16 +20,36 @@ Media:
     '}'
 ;
 
-Region:
-    'heigth:' heigth=INT
-    'width:' width=INT
-    'top:' top=INT
-    'down:' down=INT
-    'zIndex:' zIndex=INT
-;
 
 Property:
 	'name:' name=STRING 'value:' value=STRING
 ;
+
+RegionProperty:
+	name=regionProperties '=' value=INT
+;
+
+Region:
+	'region' name=ID  '{'
+		regionProperties+=RegionProperty*
+	'}'
+;
+
+
+
+enum regionProperties: width | heigth | top | botton | rigth | left | title | zIndex
+;
+
+//zIndex:
+//title:
+//	
+//;
+//
+//rigth:
+//	
+//;
+//
+//left:
+
 
 //Evento: ;
