@@ -10,7 +10,7 @@ class MediaExtensions {
 	}
 	
 	static def addProperties(Media it){
-		if(tieneProperties)
+		if(hasProperties)
 			'''
 			«FOR p: properties»
 			<property name="«p.name»" value="«p.value»"/>
@@ -18,7 +18,7 @@ class MediaExtensions {
 			'''		
 	}
 	
-	def static tieneProperties(Media it) {
+	def static hasProperties(Media it) {
 		!properties.empty
 	}
 	
