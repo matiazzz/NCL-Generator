@@ -36,4 +36,8 @@ class MediaExtensions {
 	static def hasRegion(Media it) {
 		region != null
 	}
+	
+	static def FirstUpperName(Media it){
+		name.toFirstUpper
+	}
 }

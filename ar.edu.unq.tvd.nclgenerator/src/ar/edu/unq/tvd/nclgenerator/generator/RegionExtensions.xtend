@@ -13,4 +13,8 @@ class RegionExtensions {
 		//'''
 		regionProperties.map[ p | p.name + "=" + p.value + "%" + " " ].join
 	}
+	
+	static def FirstUpperName(Region it){
+		name.toFirstUpper
+	}
 }

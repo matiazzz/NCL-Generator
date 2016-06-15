@@ -38,7 +38,7 @@ class NCLGenerator {
 	def generateMedias() {
 		'''
 		«FOR media: ncl.medias»
-		<media id="«media.name»" «media.addSrcOrType» «media.addDescriptor»>
+		<media id="«media.FirstUpperName»" «media.addSrcOrType» «media.addDescriptor»>
 			«media.addProperties»
 		<media/>
 		 
@@ -50,32 +50,32 @@ class NCLGenerator {
 		'''
 		«FOR media: ncl.medias»
 		«IF media.startAtTheBeginning == 'true'»
-			<port id="port«media.name.toFirstUpper»" component="«media.name»"/> 
+			<port id="port«media.FirstUpperName»" component="«media.FirstUpperName»"/> 
 		«ENDIF»
 		«ENDFOR»
 		'''
 	}
 	
 	def generateRegions() {
-		if (ncl.hasRegions)
-			'''
-			<regionBase>
-			«FOR region: ncl.regions»
-				<region id="«region.name.toFirstUpper»" «region.addProperties»/>
-			«ENDFOR»
-			</regionBase>	
-			'''
+		'''
+		«IF ncl.hasRegions»
+		<regionBase>
+		«FOR region: ncl.regions»    <region id="«region.FirstUpperName»" «region.addProperties»/>
+		«ENDFOR»
+		</regionBase>
+		«ENDIF»
+		'''
 	}
 	
 	def generateDescriptors() {
-		if(!ncl.regions.empty)
-			'''
-			<descriptorBase>
-			«FOR region: ncl.regions»
-				<descriptor id="desc«region.name.toFirstUpper»" region="«region.name.toFirstUpper»"/>
-			«ENDFOR»
-			</descriptorBase>		
-			'''
+		'''
+		«IF ncl.hasRegions»
+		<descriptorBase>
+		«FOR region: ncl.regions»    <descriptor id="desc«region.FirstUpperName»" region="«region.FirstUpperName»"/>
+		«ENDFOR»
+		</descriptorBase>
+		«ENDIF»
+		'''
 	}
 	
 }
