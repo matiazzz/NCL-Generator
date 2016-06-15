@@ -9,4 +9,8 @@ class NCLExtensions {
 		//medias.filter[m | m.type.nullOrEmpty]
 	//}
 	
+	static def hasRegions (NCL it){
+		!regions.empty
+	}
+	
 }

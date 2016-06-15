@@ -4,6 +4,7 @@ import ar.edu.unq.tvd.nclgenerator.nCLGenerator.NCL
 import org.eclipse.xtext.generator.IFileSystemAccess
 import static extension ar.edu.unq.tvd.nclgenerator.generator.MediaExtensions.*
 import static extension ar.edu.unq.tvd.nclgenerator.generator.RegionExtensions.*
+import static extension ar.edu.unq.tvd.nclgenerator.generator.NCLExtensions.*
 
 class NCLGenerator {
 	
@@ -21,11 +22,13 @@ class NCLGenerator {
 		<ncl id="«ncl.name»" xmlns="http://www.ncl.org.br/NCL3.0/EDTVProfile">
 		    <head>
 		    	«generateRegions»
+		    	
 		        «generateDescriptors»
 		    </head>
 		
 		    <body>
 		        «generatePorts»
+		        
 		        «generateMedias»
 		    </body>
 		</ncl>
@@ -38,6 +41,7 @@ class NCLGenerator {
 		<media id="«media.name»" «media.addSrcOrType» «media.addDescriptor»>
 			«media.addProperties»
 		<media/>
+		 
 		«ENDFOR»
 		'''
 	}
@@ -53,7 +57,7 @@ class NCLGenerator {
 	}
 	
 	def generateRegions() {
-		if (!ncl.regions.empty)
+		if (ncl.hasRegions)
 			'''
 			<regionBase>
 			«FOR region: ncl.regions»
