@@ -33,11 +33,13 @@ Region:
 ;
 
 Event:
-	'evento' media=[Media]'.'action=Action
+	'evento' media=[Media]'.'action=Action '('key=Key')'
 ;
 
-Action:
-	 ('start' | 'stop' | 'set' | 'abort' | 'resume' | 'pause') '('key=Key')' 
+//Action:
+enum Action:
+	 //('start' | 'stop' | 'set' | 'abort' | 'resume' | 'pause')  '('key=Key')'
+	 START | STOP | SET | ABORT | RESUME | PAUSE
 ;
 
 enum regionProperties: 
