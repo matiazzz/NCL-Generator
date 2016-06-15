@@ -13,4 +13,8 @@ class NCLExtensions {
 		!regions.empty
 	}
 	
+	static def hasEvents (NCL it){
+		!events.empty
+	}
+	
 }

@@ -24,14 +24,33 @@ class NCLGenerator {
 		    	«generateRegions»
 		    	
 		        «generateDescriptors»
+		        
+		        «generateConnectors»
 		    </head>
 		
 		    <body>
 		        «generatePorts»
 		        
 		        «generateMedias»
+		        «generateLinks»
 		    </body>
 		</ncl>
+		'''
+	}
+	
+	def generateConnectors(){
+		'''
+		«IF ncl.hasEvents»
+		<!--  Conectores  -->
+		«ENDIF»
+		'''
+	}
+	
+	def generateLinks(){
+		'''
+		«IF ncl.hasEvents»
+		<!--  Links  -->
+		«ENDIF»
 		'''
 	}
 	
