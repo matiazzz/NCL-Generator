@@ -8,6 +8,4 @@ class NCLExtensions {
 	static def filterMediasWithoutType(NCL it){
 		medias.filter[m | m.type.nullOrEmpty]
 	}
-	
-
 }

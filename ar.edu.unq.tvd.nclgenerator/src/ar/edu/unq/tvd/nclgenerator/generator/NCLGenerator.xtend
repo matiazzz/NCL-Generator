@@ -2,7 +2,6 @@ package ar.edu.unq.tvd.nclgenerator.generator
 
 import ar.edu.unq.tvd.nclgenerator.nCLGenerator.NCL
 import org.eclipse.xtext.generator.IFileSystemAccess
-import static extension ar.edu.unq.tvd.nclgenerator.generator.NCLExtensions.*
 import static extension ar.edu.unq.tvd.nclgenerator.generator.MediaExtensions.*
 import static extension ar.edu.unq.tvd.nclgenerator.generator.RegionExtensions.*
 
@@ -35,17 +34,18 @@ class NCLGenerator {
 	
 	def generateMedias() {
 		'''
-		«FOR m: ncl.medias»
-		<media id="«m.name»" «m.addSrcOrType»/>
+		«FOR media: ncl.medias»
+		<media id="«media.name»" «media.addSrcOrType» «media.addDescriptor»/>
 		«ENDFOR»
 		'''
 	}
 	
 	def generatePorts() {
-		//TODO
 		'''
-		«FOR m: ncl.filterMediasWithoutType»
-		<port id="port«m.name.toFirstUpper»" component="«m.name»"/> 
+		«FOR media: ncl.medias»
+		«IF media.startAtTheBeginning == 'true'»
+			<port id="port«media.name.toFirstUpper»" component="«media.name»"/> 
+		«ENDIF»
 		«ENDFOR»
 		'''
 	}
@@ -55,7 +55,7 @@ class NCLGenerator {
 			'''
 			<regionBase>
 			«FOR region: ncl.regions»
-			<region id="reg«region.name»" «region.addProperties»
+			<region id="reg«region.name.toFirstUpper»" «region.addProperties»/>
 			«ENDFOR»
 			</regionBase>	
 			'''
@@ -66,7 +66,7 @@ class NCLGenerator {
 			'''
 			<descriptorBase>
 			«FOR region: ncl.regions»
-			<descriptor id="desc«region.name.toFirstUpper»" region="reg«region.name»"/>
+			<descriptor id="desc«region.name.toFirstUpper»" region="reg«region.name.toFirstUpper»"/>
 			«ENDFOR»
 			</descriptorBase>		
 			'''

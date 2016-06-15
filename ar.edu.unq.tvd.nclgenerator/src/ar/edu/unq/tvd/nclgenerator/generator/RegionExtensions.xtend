@@ -8,7 +8,7 @@ class RegionExtensions {
 	static def addProperties(Region it){
 		'''
 		«FOR property: regionProperties»
-		«property.name»=«property.value»%
+		«property.name»="«property.value»%" 
 		«ENDFOR»	
 		'''
 	}

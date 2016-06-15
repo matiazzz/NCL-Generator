@@ -6,20 +6,17 @@ NCL:
 	'name:' name=STRING
 	regions+=Region*
     medias+=Media*
+    events+=Event*
 ;
 
 Media:
     'media' name=ID '{'
-    
     ('src:' src=STRING | 'type:' type=STRING)
     ('region' '=' region=[Region])?
     (properties+=Property)*
-
-    //(eventos+=Evento)*
-
+	('start' '=' startAtTheBeginning=BOOLEAN)?
     '}'
 ;
-
 
 Property:
 	'name:' name=STRING 'value:' value=STRING
@@ -35,21 +32,21 @@ Region:
 	'}'
 ;
 
-
-
-enum regionProperties: width | heigth | top | botton | rigth | left | title | zIndex
+Event:
+	media=[Media]'.'action=Action
 ;
 
-//zIndex:
-//title:
-//	
-//;
-//
-//rigth:
-//	
-//;
-//
-//left:
+Action:
+	 ('start' | 'stop' | 'set' | 'abort' | 'resume' | 'pause') '('key=Key')' 
+;
 
+enum regionProperties: 
+	width | height | top | botton | rigth | left | title | zIndex
+;
 
-//Evento: ;
+enum Key:
+	BLUE | RED | GREEN | YELLOW | CURSOSR_DOWN | CURSOR_UP | CURSOR_LEFT | CURSOR_RIGHT //etc 
+;
+
+terminal BOOLEAN:
+	'true'|'false';

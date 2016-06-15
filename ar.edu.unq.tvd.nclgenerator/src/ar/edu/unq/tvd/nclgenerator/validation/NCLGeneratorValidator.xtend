@@ -7,6 +7,7 @@ import ar.edu.unq.tvd.nclgenerator.nCLGenerator.Media
 import ar.edu.unq.tvd.nclgenerator.nCLGenerator.NCL
 import org.eclipse.xtext.validation.Check
 import ar.edu.unq.tvd.nclgenerator.nCLGenerator.NCLGeneratorPackage
+import ar.edu.unq.tvd.nclgenerator.nCLGenerator.Region
 
 /**
  * This class contains custom validation rules. 
@@ -15,17 +16,7 @@ import ar.edu.unq.tvd.nclgenerator.nCLGenerator.NCLGeneratorPackage
  */
 class NCLGeneratorValidator extends AbstractNCLGeneratorValidator {
 	
-//  	public static val INVALID_NAME = 'invalidName'
 	public static val DUPLICATE_NAME = 'duplicateName'
-
-//	@Check
-//	def checkGreetingStartsWithCapital(Media media) {
-//		if (!Character.isUpperCase(media.name.charAt(0))) {
-//			warning('Name should start with a capital', 
-//					NCLGeneratorPackage.Literals.MEDIA__NAME,
-//					INVALID_NAME)
-//		}
-//	}
 
 	@Check
 	def checkExtencionDemas(NCL ncl){
@@ -40,8 +31,16 @@ class NCLGeneratorValidator extends AbstractNCLGeneratorValidator {
 		}
 	}
 	
+	@Check
+	def checkForRegionsWithSameName(Region region) {
+		if(region.model.regions.filter[r | r.name.toLowerCase == region.name.toLowerCase].size > 1){
+			error('''Duplicate region '«region.name»' ''', region, NCLGeneratorPackage.Literals.REGION__NAME, DUPLICATE_NAME)
+		}
+	}
+	
 
 	
 	// Extension methods to get the model
 	def model(Media it) {eContainer as NCL}
+	def model(Region it) {eContainer as NCL}
 }

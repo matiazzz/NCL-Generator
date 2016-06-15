@@ -24,4 +24,8 @@ class MediaExtensions {
 		else
 			'''type="«type»"'''
 	}
+	
+	static def addDescriptor(Media it){
+		if(region != null) '''descriptor="desc«region.name.toFirstUpper»"'''
+	}
 }
