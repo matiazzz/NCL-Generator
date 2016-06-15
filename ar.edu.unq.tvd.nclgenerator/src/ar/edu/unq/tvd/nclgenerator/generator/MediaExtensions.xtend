@@ -10,12 +10,16 @@ class MediaExtensions {
 	}
 	
 	static def addProperties(Media it){
-		if(!properties.empty)
+		if(tienePropiedades)
 			'''
 			«FOR p: properties»
 			<property name="«p.name»" value="«p.value»"/>
 			«ENDFOR»
 			'''		
+	}
+	
+	def static tienePropiedades(Media it) {
+		!properties.empty
 	}
 	
 	static def addSrcOrType(Media it){
@@ -26,6 +30,10 @@ class MediaExtensions {
 	}
 	
 	static def addDescriptor(Media it){
-		if(region != null) '''descriptor="desc«region.name.toFirstUpper»"'''
+		if(tieneRegion) '''descriptor="desc«region.name.toFirstUpper»"'''
+	}
+	
+	static def tieneRegion(Media it) {
+		region != null
 	}
 }

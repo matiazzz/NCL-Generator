@@ -35,7 +35,9 @@ class NCLGenerator {
 	def generateMedias() {
 		'''
 		«FOR media: ncl.medias»
-		<media id="«media.name»" «media.addSrcOrType» «media.addDescriptor»/>
+		<media id="«media.name»" «media.addSrcOrType» «media.addDescriptor»>
+			«media.addProperties»
+		<media/>
 		«ENDFOR»
 		'''
 	}
@@ -55,7 +57,7 @@ class NCLGenerator {
 			'''
 			<regionBase>
 			«FOR region: ncl.regions»
-			<region id="reg«region.name.toFirstUpper»" «region.addProperties»/>
+				<region id="«region.name.toFirstUpper»" «region.addProperties»/>
 			«ENDFOR»
 			</regionBase>	
 			'''
@@ -66,7 +68,7 @@ class NCLGenerator {
 			'''
 			<descriptorBase>
 			«FOR region: ncl.regions»
-			<descriptor id="desc«region.name.toFirstUpper»" region="reg«region.name.toFirstUpper»"/>
+				<descriptor id="desc«region.name.toFirstUpper»" region="«region.name.toFirstUpper»"/>
 			«ENDFOR»
 			</descriptorBase>		
 			'''
