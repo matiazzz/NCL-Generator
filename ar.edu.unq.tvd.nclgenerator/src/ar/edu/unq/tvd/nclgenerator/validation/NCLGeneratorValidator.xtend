@@ -17,6 +17,7 @@ import ar.edu.unq.tvd.nclgenerator.nCLGenerator.Region
 class NCLGeneratorValidator extends AbstractNCLGeneratorValidator {
 	
 	public static val DUPLICATE_NAME = 'duplicateName'
+	public static val MISSING_REFERENCE_REGION = 'missingReferenceRegion'
 
 	@Check
 	def checkExtencionDemas(NCL ncl){
@@ -38,7 +39,11 @@ class NCLGeneratorValidator extends AbstractNCLGeneratorValidator {
 		}
 	}
 	
-
+	@Check
+	def checkMissingReferenceToRegion(Media it) {
+		if(model.regions.filter[r | region.name == r.name].size < 1)
+			error('''Couldn't resolve reference to Region '«region.name»' ''', it, NCLGeneratorPackage.Literals.MEDIA__REGION, MISSING_REFERENCE_REGION)
+	}
 	
 	// Extension methods to get the model
 	def model(Media it) {eContainer as NCL}

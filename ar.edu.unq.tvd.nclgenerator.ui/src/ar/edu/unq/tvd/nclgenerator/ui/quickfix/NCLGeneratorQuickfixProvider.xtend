@@ -35,5 +35,15 @@ class NCLGeneratorQuickfixProvider extends DefaultQuickfixProvider {
 			xtextDocument.replace(issue.offset, issue.length, name + "1")
 		]
 	}
-		
+	
+	@Fix(NCLGeneratorValidator.MISSING_REFERENCE_REGION)
+	def createMissingRegion(Issue issue, IssueResolutionAcceptor acceptor){
+		acceptor.accept(issue, 'Create region.', 'Create a new region.', 'upcase.png') [
+			context |
+			val xtetxDocument = context.xtextDocument
+			val name = xtetxDocument.get(issue.offset, issue.length)
+			val newRegion = "\nregion "+name+" {\n\n}\n"
+			xtetxDocument.replace(xtetxDocument.getLineLength(0), 0, newRegion)
+		]
+	}	
 }

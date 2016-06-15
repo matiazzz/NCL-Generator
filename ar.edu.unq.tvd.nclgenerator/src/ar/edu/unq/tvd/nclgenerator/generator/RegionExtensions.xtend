@@ -6,12 +6,7 @@ class RegionExtensions {
 	// Extensions methods for Region
 	
 	static def addProperties(Region it){
-		//'''
-		//«FOR property: regionProperties»
-		//«property.name»="«property.value»%" 
-		//«ENDFOR»	
-		//'''
-		regionProperties.map[ p | p.name + "=" + p.value + "%" + " " ].join
+		regionProperties.map[ p | p.name + '=' + '"' + p.value + '%"' + ' '].join
 	}
 	
 	static def FirstUpperName(Region it){

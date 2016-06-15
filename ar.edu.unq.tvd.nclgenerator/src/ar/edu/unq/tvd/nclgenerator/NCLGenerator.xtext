@@ -33,7 +33,7 @@ Region:
 ;
 
 Event:
-	'evento' media=[Media]'.'action=Action '('key=Key')'
+	'event' media=[Media]'.'action=Action '('key=Key')'
 ;
 
 //Action:
@@ -43,7 +43,7 @@ enum Action:
 ;
 
 enum regionProperties: 
-	width | height | top | botton | rigth | left | title | zIndex
+	width | height | top | bottom | right | left | title | zIndex
 ;
 
 enum Key:

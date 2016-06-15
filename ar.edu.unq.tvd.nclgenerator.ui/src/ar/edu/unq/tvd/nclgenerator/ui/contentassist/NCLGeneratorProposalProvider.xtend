@@ -3,10 +3,20 @@
  */
 package ar.edu.unq.tvd.nclgenerator.ui.contentassist
 
+import org.eclipse.xtext.RuleCall
+import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext
+import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
+import org.eclipse.emf.ecore.EObject
 
 /**
  * See https://www.eclipse.org/Xtext/documentation/304_ide_concepts.html#content-assist
  * on how to customize the content assistant.
  */
 class NCLGeneratorProposalProvider extends AbstractNCLGeneratorProposalProvider {
+	
+	override complete_Region(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		var proposal = "region " + "name " + "{\n\n}"
+		acceptor.accept(createCompletionProposal(proposal, context));
+		super.complete_Region(model, ruleCall, context, acceptor)
+	}
 }
