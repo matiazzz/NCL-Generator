@@ -33,7 +33,7 @@ Region:
 ;
 
 Event:
-	media=[Media]'.'action=Action
+	'evento' media=[Media]'.'action=Action
 ;
 
 Action:
