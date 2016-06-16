@@ -11,11 +11,15 @@ class MediaExtensions {
 	
 	static def addProperties(Media it){
 		if(hasProperties)
-			'''
+		'''
+		>
 			«FOR p: properties»
 			<property name="«p.name»" value="«p.value»"/>
 			«ENDFOR»
-			'''		
+		</media>
+		'''
+		else
+			'''/>'''	
 	}
 	
 	def static hasProperties(Media it) {
