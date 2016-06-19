@@ -1,6 +1,7 @@
 package ar.edu.unq.tvd.nclgenerator.generator
 
 import ar.edu.unq.tvd.nclgenerator.nCLGenerator.Media
+import ar.edu.unq.tvd.nclgenerator.nCLGenerator.NCL
 
 class MediaExtensions {
 	// Extensions methods for Media
@@ -44,4 +45,6 @@ class MediaExtensions {
 	static def FirstUpperName(Media it){
 		name.toFirstUpper
 	}
+	
+	static def ncl(Media it) {eContainer as NCL}
 }

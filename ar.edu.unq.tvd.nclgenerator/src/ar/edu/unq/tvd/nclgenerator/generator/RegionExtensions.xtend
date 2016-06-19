@@ -1,5 +1,6 @@
 package ar.edu.unq.tvd.nclgenerator.generator
 
+import ar.edu.unq.tvd.nclgenerator.nCLGenerator.NCL
 import ar.edu.unq.tvd.nclgenerator.nCLGenerator.Region
 
 class RegionExtensions {
@@ -9,7 +10,7 @@ class RegionExtensions {
 		regionProperties.map[ p | p.name + '=' + '"' + p.value + '%"' + ' '].join
 	}
 	
-	static def FirstUpperName(Region it){
-		name.toFirstUpper
-	}
+	static def FirstUpperName(Region it) { name.toFirstUpper }
+	
+	static def ncl (Region it) {eContainer as NCL}
 }

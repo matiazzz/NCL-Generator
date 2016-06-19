@@ -8,6 +8,8 @@ import ar.edu.unq.tvd.nclgenerator.nCLGenerator.NCL
 import org.eclipse.xtext.validation.Check
 import ar.edu.unq.tvd.nclgenerator.nCLGenerator.NCLGeneratorPackage
 import ar.edu.unq.tvd.nclgenerator.nCLGenerator.Region
+import static extension ar.edu.unq.tvd.nclgenerator.generator.RegionExtensions.*
+import static extension ar.edu.unq.tvd.nclgenerator.generator.MediaExtensions.*
 
 /**
  * This class contains custom validation rules. 
@@ -17,7 +19,6 @@ import ar.edu.unq.tvd.nclgenerator.nCLGenerator.Region
 class NCLGeneratorValidator extends AbstractNCLGeneratorValidator {
 	
 	public static val DUPLICATE_NAME = 'duplicateName'
-	public static val MISSING_REFERENCE_REGION = 'missingReferenceRegion'
 
 	@Check
 	def checkExtencionDemas(NCL ncl){
@@ -27,25 +28,15 @@ class NCLGeneratorValidator extends AbstractNCLGeneratorValidator {
 	
 	@Check
 	def checkForMediasWithSameName(Media media) {
-		if(media.model.medias.filter[m | m.name.toLowerCase == media.name.toLowerCase].size > 1){
+		if(media.ncl.medias.filter[m | m.name.toLowerCase == media.name.toLowerCase].size > 1){
 			error('''Duplicate media '«media.name»' ''', media, NCLGeneratorPackage.Literals.MEDIA__NAME, DUPLICATE_NAME)
 		}
 	}
 	
 	@Check
 	def checkForRegionsWithSameName(Region region) {
-		if(region.model.regions.filter[r | r.name.toLowerCase == region.name.toLowerCase].size > 1){
+		if(region.ncl.regions.filter[r | r.name.toLowerCase == region.name.toLowerCase].size > 1){
 			error('''Duplicate region '«region.name»' ''', region, NCLGeneratorPackage.Literals.REGION__NAME, DUPLICATE_NAME)
 		}
 	}
-	
-	@Check
-	def checkMissingReferenceToRegion(Media it) {
-		if(model.regions.filter[r | region.name == r.name].size < 1)
-			error('''Couldn't resolve reference to Region '«region.name»' ''', it, NCLGeneratorPackage.Literals.MEDIA__REGION, MISSING_REFERENCE_REGION)
-	}
-	
-	// Extension methods to get the model
-	def model(Media it) {eContainer as NCL}
-	def model(Region it) {eContainer as NCL}
 }

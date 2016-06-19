@@ -4,10 +4,15 @@
 package ar.edu.unq.tvd.nclgenerator.ui.quickfix
 
 import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider
-import ar.edu.unq.tvd.nclgenerator.validation.NCLGeneratorValidator
+import org.eclipse.xtext.ui.editor.quickfix.Fix
 import org.eclipse.xtext.validation.Issue
 import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor
-import org.eclipse.xtext.ui.editor.quickfix.Fix
+import static extension org.eclipse.xtext.EcoreUtil2.*
+import org.eclipse.xtext.diagnostics.Diagnostic
+import ar.edu.unq.tvd.nclgenerator.nCLGenerator.NCLGeneratorFactory
+import ar.edu.unq.tvd.nclgenerator.nCLGenerator.Media
+import static extension ar.edu.unq.tvd.nclgenerator.generator.MediaExtensions.*
+import ar.edu.unq.tvd.nclgenerator.validation.NCLGeneratorValidator
 
 /**
  * Custom quickfixes.
@@ -16,16 +21,6 @@ import org.eclipse.xtext.ui.editor.quickfix.Fix
  */
 class NCLGeneratorQuickfixProvider extends DefaultQuickfixProvider {
 
-//	@Fix(NCLGeneratorValidator.INVALID_NAME)
-//	def capitalizeName(Issue issue, IssueResolutionAcceptor acceptor) {
-//		acceptor.accept(issue, 'Capitalize name', 'Capitalize the name.', 'upcase.png') [
-//			context |
-//			val xtextDocument = context.xtextDocument
-//			val firstLetter = xtextDocument.get(issue.offset, 1)
-//			xtextDocument.replace(issue.offset, 1, firstLetter.toUpperCase)
-//		]
-//	}
-	
 	@Fix(NCLGeneratorValidator.DUPLICATE_NAME)
 	def changeDuplicateName(Issue issue, IssueResolutionAcceptor acceptor) {
 		acceptor.accept(issue, 'Rename', 'Rename the name.', 'upcase.png') [
@@ -36,14 +31,16 @@ class NCLGeneratorQuickfixProvider extends DefaultQuickfixProvider {
 		]
 	}
 	
-	@Fix(NCLGeneratorValidator.MISSING_REFERENCE_REGION)
-	def createMissingRegion(Issue issue, IssueResolutionAcceptor acceptor){
-		acceptor.accept(issue, 'Create region.', 'Create a new region.', 'upcase.png') [
-			context |
-			val xtetxDocument = context.xtextDocument
-			val name = xtetxDocument.get(issue.offset, issue.length)
-			val newRegion = "\nregion "+name+" {\n\n}\n"
-			xtetxDocument.replace(xtetxDocument.getLineLength(0), 0, newRegion)
+	@Fix(Diagnostic.LINKING_DIAGNOSTIC)
+	def createMissingRegion (Issue issue, IssueResolutionAcceptor acceptor){
+		acceptor.accept(issue, "Create missing region", "Create missing region", "") [
+			 
+			element, context |
+			val currentMedia = element.getContainerOfType(typeof(Media))
+			val ncl = currentMedia.ncl
+			ncl.regions.add(NCLGeneratorFactory.eINSTANCE.createRegion => [
+					name = context.xtextDocument.get(issue.offset, issue.length)
+			])
 		]
-	}	
+	}
 }
