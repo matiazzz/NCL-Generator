@@ -3,16 +3,17 @@
  */
 package ar.edu.unq.tvd.nclgenerator.ui.quickfix
 
+import ar.edu.unq.tvd.nclgenerator.nCLGenerator.Media
+import ar.edu.unq.tvd.nclgenerator.nCLGenerator.NCLGeneratorFactory
+import ar.edu.unq.tvd.nclgenerator.validation.NCLGeneratorValidator
+import org.eclipse.xtext.diagnostics.Diagnostic
 import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider
 import org.eclipse.xtext.ui.editor.quickfix.Fix
-import org.eclipse.xtext.validation.Issue
 import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor
-import static extension org.eclipse.xtext.EcoreUtil2.*
-import org.eclipse.xtext.diagnostics.Diagnostic
-import ar.edu.unq.tvd.nclgenerator.nCLGenerator.NCLGeneratorFactory
-import ar.edu.unq.tvd.nclgenerator.nCLGenerator.Media
+import org.eclipse.xtext.validation.Issue
+
 import static extension ar.edu.unq.tvd.nclgenerator.generator.MediaExtensions.*
-import ar.edu.unq.tvd.nclgenerator.validation.NCLGeneratorValidator
+import static extension org.eclipse.xtext.EcoreUtil2.*
 
 /**
  * Custom quickfixes.
@@ -23,7 +24,7 @@ class NCLGeneratorQuickfixProvider extends DefaultQuickfixProvider {
 
 	@Fix(NCLGeneratorValidator.DUPLICATE_NAME)
 	def changeDuplicateName(Issue issue, IssueResolutionAcceptor acceptor) {
-		acceptor.accept(issue, 'Rename', 'Rename the name.', 'upcase.png') [
+		acceptor.accept(issue, 'Rename', 'Rename the region.', '') [
 			context |
 			val xtextDocument = context.xtextDocument
 			val name = xtextDocument.get(issue.offset, issue.length)
@@ -33,7 +34,7 @@ class NCLGeneratorQuickfixProvider extends DefaultQuickfixProvider {
 	
 	@Fix(Diagnostic.LINKING_DIAGNOSTIC)
 	def createMissingRegion (Issue issue, IssueResolutionAcceptor acceptor){
-		acceptor.accept(issue, "Create missing region", "Create missing region", "") [
+		acceptor.accept(issue, 'Create missing region', 'Create missing region', '') [
 			 
 			element, context |
 			val currentMedia = element.getContainerOfType(typeof(Media))
@@ -41,6 +42,16 @@ class NCLGeneratorQuickfixProvider extends DefaultQuickfixProvider {
 			ncl.regions.add(NCLGeneratorFactory.eINSTANCE.createRegion => [
 					name = context.xtextDocument.get(issue.offset, issue.length)
 			])
+		]
+	}
+	
+	@Fix(NCLGeneratorValidator.DUPLICATE_REGION_PROPERTY)
+	def deleteDuplicateProperty(Issue issue, IssueResolutionAcceptor acceptor){
+		acceptor.accept(issue, 'Delete duplicate property', 'Delete duplicate property.', '') [
+			context |
+			val xtetxDocument = context.xtextDocument
+			val line = xtetxDocument.getLineOfOffset(issue.offset)
+			xtetxDocument.replace(issue.offset, xtetxDocument.getLineLength(line) -1, '')
 		]
 	}
 }

@@ -10,6 +10,7 @@ import ar.edu.unq.tvd.nclgenerator.nCLGenerator.NCLGeneratorPackage
 import ar.edu.unq.tvd.nclgenerator.nCLGenerator.Region
 import static extension ar.edu.unq.tvd.nclgenerator.generator.RegionExtensions.*
 import static extension ar.edu.unq.tvd.nclgenerator.generator.MediaExtensions.*
+import ar.edu.unq.tvd.nclgenerator.nCLGenerator.RegionProperty
 
 /**
  * This class contains custom validation rules. 
@@ -19,6 +20,7 @@ import static extension ar.edu.unq.tvd.nclgenerator.generator.MediaExtensions.*
 class NCLGeneratorValidator extends AbstractNCLGeneratorValidator {
 	
 	public static val DUPLICATE_NAME = 'duplicateName'
+	public static val DUPLICATE_REGION_PROPERTY = 'duplicateRegionProperty'
 
 	@Check
 	def checkExtencionDemas(NCL ncl){
@@ -38,5 +40,16 @@ class NCLGeneratorValidator extends AbstractNCLGeneratorValidator {
 		if(region.ncl.regions.filter[r | r.name.toLowerCase == region.name.toLowerCase].size > 1){
 			error('''Duplicate region '«region.name»' ''', region, NCLGeneratorPackage.Literals.REGION__NAME, DUPLICATE_NAME)
 		}
+	}
+	
+	@Check
+	def checkForDuplicatePropertiesInRegion(Region it){
+		for (property : regionProperties)
+			if(hasDuplicates(property))
+				error('''Duplicate property '«property.name»' in Region.«name» ''', property, NCLGeneratorPackage.Literals.REGION_PROPERTY__NAME, DUPLICATE_REGION_PROPERTY)
+	}
+	
+	def private hasDuplicates(Region it, RegionProperty property){
+		regionProperties.filter[p | p.name == property.name].size > 1
 	}
 }
