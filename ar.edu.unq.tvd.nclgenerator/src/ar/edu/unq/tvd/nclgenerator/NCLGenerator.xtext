@@ -12,14 +12,15 @@ NCL:
 Media:
     'media' name=ID '{'
     ('src:' src=STRING | 'type:' type=STRING)
-    ('region' '=' region=[Region])?
-    (properties+=Property)*
-	('start' '=' startAtTheBeginning=BOOLEAN)?
+    (('region' '=' region=[Region]) | regionProperties+=RegionProperty*)
+    (properties+=MediaProperty)*
+	(start ?= 'start')?
+    (event=Event)?
     '}'
 ;
 
-Property:
-	'name:' name=STRING 'value:' value=STRING
+MediaProperty:
+	'property:' name=mediaProperties 'value:' value=STRING
 ;
 
 RegionProperty:
@@ -32,23 +33,45 @@ Region:
 	'}'
 ;
 
-Event:
-	'event' media=[Media]'.'action=Action '('key=Key')'
+Event: {Event}
+	'event' '{'
+		(conditionAction+=CondtionAction)*
+	'}'
+;
+
+CondtionAction:
+	condition=Condition action=Action ('('media=[Media]')')?
 ;
 
 //Action:
 enum Action:
-	 //('start' | 'stop' | 'set' | 'abort' | 'resume' | 'pause')  '('key=Key')'
-	 START | STOP | SET | ABORT | RESUME | PAUSE
+	 start | stop | set | abort | resume | pause
 ;
 
 enum regionProperties: 
 	width | height | top | bottom | right | left | title | zIndex
 ;
 
+enum mediaProperties: 
+	width | height | top | bottom | right | left | title | zIndex //agregar propiedades
+;
+
+Condition:
+	OnSelection | OnStart | OnStop
+;
+
+OnSelection:
+	'onSelection' '('key=Key')'
+;
+
+OnStart:
+	'onStart' '('media=[Media]')'
+;
+
+OnStop:
+	'onStop' '('media=[Media]')'
+;
+
 enum Key:
 	BLUE | RED | GREEN | YELLOW | CURSOSR_DOWN | CURSOR_UP | CURSOR_LEFT | CURSOR_RIGHT //etc 
 ;
-
-terminal BOOLEAN:
-	'true'|'false';

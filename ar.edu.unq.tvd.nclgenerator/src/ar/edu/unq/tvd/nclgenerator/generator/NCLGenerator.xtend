@@ -66,7 +66,7 @@ class NCLGenerator {
 	def generatePorts() {
 		'''
 		«FOR media: ncl.medias»
-		«IF media.startAtTheBeginning == 'true'»
+		«IF media.isStart»
 			<port id="port«media.FirstUpperName»" component="«media.FirstUpperName»"/> 
 		«ENDIF»
 		«ENDFOR»
@@ -75,23 +75,45 @@ class NCLGenerator {
 	
 	def generateRegions() {
 		'''
-		«IF ncl.hasRegions»
 		<regionBase>
+		«IF ncl.hasRegions»
 		«FOR region: ncl.regions»    <region id="«region.FirstUpperName»" «region.addProperties»/>
 		«ENDFOR»
-		</regionBase>
 		«ENDIF»
+		
+		«generateMediaRegions»
+		
+		</regionBase>		
+		'''
+	}
+	
+	def generateMediaRegions(){
+		'''
+		«FOR media: ncl.medias»
+		«IF !media.hasRegion»    <region id="Reg«media.FirstUpperName»" «media.addRegionProperties»/>«ENDIF»
+		«ENDFOR»
 		'''
 	}
 	
 	def generateDescriptors() {
-		'''
-		«IF ncl.hasRegions»
+		'''		
 		<descriptorBase>
+		«IF ncl.hasRegions»
 		«FOR region: ncl.regions»    <descriptor id="desc«region.FirstUpperName»" region="«region.FirstUpperName»"/>
 		«ENDFOR»
-		</descriptorBase>
 		«ENDIF»
+		
+		«generateMediaDesc»
+		
+		</descriptorBase>
+		'''
+	}
+	
+	def generateMediaDesc(){
+		'''
+		«FOR media: ncl.medias»
+		«IF !media.hasRegion»    <descriptor id="desc«media.FirstUpperName»" region="Reg«media.FirstUpperName»"/>«ENDIF»
+		«ENDFOR»
 		'''
 	}
 	

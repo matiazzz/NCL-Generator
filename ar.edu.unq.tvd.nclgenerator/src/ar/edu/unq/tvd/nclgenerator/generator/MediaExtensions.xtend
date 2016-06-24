@@ -23,6 +23,14 @@ class MediaExtensions {
 			'''/>'''	
 	}
 	
+	static def addRegionProperties(Media it){
+		'''
+		«FOR p: regionProperties»
+			«p.name» = "«p.value»%"
+		«ENDFOR»
+		'''
+	}
+	
 	def static hasProperties(Media it) {
 		!properties.empty
 	}
@@ -36,6 +44,7 @@ class MediaExtensions {
 	
 	static def addDescriptor(Media it){
 		if(hasRegion) '''descriptor="desc«region.name.toFirstUpper»"'''
+		else '''descriptor="desc«name.toFirstUpper»"'''
 	}
 	
 	static def hasRegion(Media it) {
