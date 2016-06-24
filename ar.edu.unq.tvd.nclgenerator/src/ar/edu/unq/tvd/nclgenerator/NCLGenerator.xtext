@@ -40,7 +40,15 @@ Event: {Event}
 ;
 
 CondtionAction:
-	condition=Condition action=Action ('('media=[Media]')')?
+	condition=Condition '->' (simpleAction=SimpleAction | compoundAction=CompoundAction)
+;
+
+SimpleAction:
+	action=Action ('('media=[Media]')')?
+;
+
+CompoundAction: {CompoundAction}
+	('seq' | 'par') '['(simpleAction+=SimpleAction)*']'
 ;
 
 //Action:
