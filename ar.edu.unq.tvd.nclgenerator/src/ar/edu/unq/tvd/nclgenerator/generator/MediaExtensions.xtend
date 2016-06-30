@@ -2,6 +2,7 @@ package ar.edu.unq.tvd.nclgenerator.generator
 
 import ar.edu.unq.tvd.nclgenerator.nCLGenerator.Media
 import ar.edu.unq.tvd.nclgenerator.nCLGenerator.NCL
+import static extension ar.edu.unq.tvd.nclgenerator.generator.EventExtensions.*
 
 class MediaExtensions {
 	// Extensions methods for Media
@@ -56,4 +57,11 @@ class MediaExtensions {
 	}
 	
 	static def ncl(Media it) {eContainer as NCL}
+	
+	static def hasEvents(Media it){
+		!(event == null) //!event.conditionAction.nullOrEmpty
+	}
+	
+	static def addCausalConnector(Media it){event.addCausalConnector}
+	
 }

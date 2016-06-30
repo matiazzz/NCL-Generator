@@ -6,7 +6,7 @@ NCL:
 	'name:' name=STRING
 	regions+=Region*
     medias+=Media*
-    events+=Event*
+    //events+=Event*
 ;
 
 Media:
@@ -48,10 +48,13 @@ SimpleAction:
 ;
 
 CompoundAction: {CompoundAction}
-	('seq' | 'par') '['(simpleAction+=SimpleAction)*']'
+	operator=Operator '['(simpleAction+=SimpleAction)*']'
 ;
 
-//Action:
+enum Operator:
+	seq | par
+;
+
 enum Action:
 	 start | stop | set | abort | resume | pause
 ;

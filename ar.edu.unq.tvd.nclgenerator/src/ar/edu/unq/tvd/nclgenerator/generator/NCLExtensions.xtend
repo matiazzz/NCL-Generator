@@ -1,6 +1,7 @@
 package ar.edu.unq.tvd.nclgenerator.generator
 
 import ar.edu.unq.tvd.nclgenerator.nCLGenerator.NCL
+import static extension ar.edu.unq.tvd.nclgenerator.generator.MediaExtensions.*
 
 class NCLExtensions {
 	// Extensions methods for NCL
@@ -12,9 +13,9 @@ class NCLExtensions {
 	static def hasRegions (NCL it){
 		!regions.empty
 	}
-	
-	static def hasEvents (NCL it){
-		!events.empty
+		
+	static def mediasWithEvents (NCL it){
+		medias.filter[m | m.hasEvents]
 	}
 	
 }
