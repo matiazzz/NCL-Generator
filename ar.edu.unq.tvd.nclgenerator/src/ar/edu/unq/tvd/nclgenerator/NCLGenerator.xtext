@@ -15,7 +15,7 @@ Media:
     (('region' '=' region=[Region]) | regionProperties+=RegionProperty*)
     (properties+=MediaProperty)*
 	(start ?= 'start')?
-    (event=Event)?
+    (conditionActions+=CondtionAction)*
     '}'
 ;
 
@@ -33,14 +33,8 @@ Region:
 	'}'
 ;
 
-Event: {Event}
-	'event' '{'
-		(conditionAction+=CondtionAction)*
-	'}'
-;
-
 CondtionAction:
-	condition=Condition '->' (simpleAction=SimpleAction | compoundAction=CompoundAction)
+ 'event' name=ID condition=Condition '->' (simpleAction=SimpleAction | compoundAction=CompoundAction)
 ;
 
 SimpleAction:

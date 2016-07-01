@@ -5,7 +5,7 @@ import org.eclipse.xtext.generator.IFileSystemAccess
 import static extension ar.edu.unq.tvd.nclgenerator.generator.MediaExtensions.*
 import static extension ar.edu.unq.tvd.nclgenerator.generator.RegionExtensions.*
 import static extension ar.edu.unq.tvd.nclgenerator.generator.NCLExtensions.*
-import static extension ar.edu.unq.tvd.nclgenerator.generator.EventExtensions.*
+import ar.edu.unq.tvd.nclgenerator.nCLGenerator.Media
 
 class NCLGenerator {
 	
@@ -42,18 +42,23 @@ class NCLGenerator {
 	def generateConnectors(){
 		'''		
 		<connectorBase>
-		«FOR media: ncl.mediasWithEvents»
-		«media.addCausalConnector»
-		«ENDFOR»
+		
+			«FOR media: ncl.mediasWithEvents»
+			«media.addCausalConnector»
+			«ENDFOR»
+			
 		</connectorBase>
 		'''
 	}
 	
 	def generateLinks(){
 		'''
-		<!--  Links  -->		
+		«FOR media: ncl.mediasWithEvents»
+		«media.addLinks»
+		«ENDFOR»
 		'''
 	}
+	
 	
 	def generateMedias() {
 		'''

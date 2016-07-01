@@ -2,7 +2,11 @@ package ar.edu.unq.tvd.nclgenerator.generator
 
 import ar.edu.unq.tvd.nclgenerator.nCLGenerator.Media
 import ar.edu.unq.tvd.nclgenerator.nCLGenerator.NCL
-import static extension ar.edu.unq.tvd.nclgenerator.generator.EventExtensions.*
+import static extension ar.edu.unq.tvd.nclgenerator.generator.ConditionExtensions.*
+import static extension ar.edu.unq.tvd.nclgenerator.generator.ConditionActionExtensions.*
+import static extension ar.edu.unq.tvd.nclgenerator.generator.SimpleActionExtensions.*
+import static extension ar.edu.unq.tvd.nclgenerator.generator.CompoundActionExtensions.*
+
 
 class MediaExtensions {
 	// Extensions methods for Media
@@ -59,9 +63,37 @@ class MediaExtensions {
 	static def ncl(Media it) {eContainer as NCL}
 	
 	static def hasEvents(Media it){
-		!(event == null) //!event.conditionAction.nullOrEmpty
+		!(conditionActions.nullOrEmpty)
 	}
 	
-	static def addCausalConnector(Media it){event.addCausalConnector}
+	static def addCausalConnector(Media it){
+		'''
+		«FOR ca: conditionActions»
+		<causalConnector id="«ca.name»">
+			«ca.condition.addSimpleCondition»
+			«ca.addSimpleAction»
+			«ca.addCompoundActions»
+		</causalConnector>
+		«ENDFOR»
+		'''
+	}
+	
+	static def addLinks(Media it){
+		'''
+		«FOR event : conditionActions»
+		<link xconnector="«event.name»">
+			<bind role="«event.condition.addRole»" component="«FirstUpperName»">
+		    </bind>
+		    «IF event.simpleAction != null»
+		    «event.simpleAction.addBind»
+		    «ENDIF»
+			«IF event.compoundAction != null»
+			«event.compoundAction.addBinds»
+			«ENDIF»
+			
+		</link>
+		«ENDFOR»
+		'''
+	}
 	
 }

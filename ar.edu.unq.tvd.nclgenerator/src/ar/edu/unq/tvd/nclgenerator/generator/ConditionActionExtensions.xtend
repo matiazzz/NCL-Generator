@@ -10,20 +10,19 @@ class ConditionActionExtensions {
 	}
 	
 	static def addSimpleAction(CondtionAction it){
-		'''
-		«IF simpleAction.action != null»
+		if (simpleAction != null)
+			'''
 			<simpleAction role="«simpleAction.action»"/>
-		«ENDIF»
-		'''
+			'''
 	}
 	
 	static def addCompoundActions(CondtionAction it){
 		if (compoundAction != null)
 		'''		
 		<compoundAction operator="«compoundAction.operator»">		
-		«FOR sa: compoundAction.simpleAction»
+			«FOR sa: compoundAction.simpleAction»
 			<simpleAction role="«sa.action»"/>
-		«ENDFOR»
+			«ENDFOR»
 		</compoundAction>
 		'''
 	}
