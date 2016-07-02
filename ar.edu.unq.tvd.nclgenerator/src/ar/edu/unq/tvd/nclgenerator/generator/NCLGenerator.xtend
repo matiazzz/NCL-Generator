@@ -5,7 +5,6 @@ import org.eclipse.xtext.generator.IFileSystemAccess
 import static extension ar.edu.unq.tvd.nclgenerator.generator.MediaExtensions.*
 import static extension ar.edu.unq.tvd.nclgenerator.generator.RegionExtensions.*
 import static extension ar.edu.unq.tvd.nclgenerator.generator.NCLExtensions.*
-import ar.edu.unq.tvd.nclgenerator.nCLGenerator.Media
 
 class NCLGenerator {
 	
@@ -23,15 +22,15 @@ class NCLGenerator {
 		<ncl id="«ncl.name»" xmlns="http://www.ncl.org.br/NCL3.0/EDTVProfile">
 		    <head>
 		    	«generateRegions»
-		    	
 		        «generateDescriptors»
-		        
 		        «generateConnectors»
 		    </head>
 		
 		    <body>
 		        «generatePorts»
-		        
+		        <media id="keys" type="application/x-ginga-settings">
+		      		<property name="channel.keyCapture" value="colored_keys,selection_keys,cursor_keys,numeric_keys"/>
+		        </media>
 		        «generateMedias»
 		        «generateLinks»
 		    </body>

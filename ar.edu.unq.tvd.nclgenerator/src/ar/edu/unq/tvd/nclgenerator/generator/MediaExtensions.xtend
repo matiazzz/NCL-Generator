@@ -67,31 +67,32 @@ class MediaExtensions {
 	}
 	
 	static def addCausalConnector(Media it){
+		var id = 0
 		'''
 		«FOR ca: conditionActions»
-		<causalConnector id="«ca.name»">
-			«ca.condition.addSimpleCondition»
-			«ca.addSimpleAction»
-			«ca.addCompoundActions»
-		</causalConnector>
+			<causalConnector id="«name»«id++»">
+				«ca.condition.addSimpleCondition»
+				«ca.addSimpleAction»
+				«ca.addCompoundActions»
+			</causalConnector>
 		«ENDFOR»
 		'''
 	}
 	
 	static def addLinks(Media it){
+		var id = 0
 		'''
 		«FOR event : conditionActions»
-		<link xconnector="«event.name»">
-			<bind role="«event.condition.addRole»" component="«FirstUpperName»">
-		    </bind>
-		    «IF event.simpleAction != null»
-		    «event.simpleAction.addBind»
-		    «ENDIF»
-			«IF event.compoundAction != null»
-			«event.compoundAction.addBinds»
-			«ENDIF»
-			
-		</link>
+			<link xconnector="«name»«id++»">
+				<bind role="«event.condition.addRole»" component="«FirstUpperName»">
+			    </bind>
+			    «IF event.simpleAction != null»
+			    «event.simpleAction.addBind(it)»
+			    «ENDIF»
+				«IF event.compoundAction != null»
+				«event.compoundAction.addBinds(it)»
+				«ENDIF»
+			</link>
 		«ENDFOR»
 		'''
 	}
