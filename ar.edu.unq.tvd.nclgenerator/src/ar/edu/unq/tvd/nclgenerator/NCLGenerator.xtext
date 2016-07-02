@@ -6,12 +6,11 @@ NCL:
 	'name:' name=STRING
 	regions+=Region*
     medias+=Media*
-    //events+=Event*
 ;
 
 Media:
     'media' name=ID '{'
-    ('src:' src=STRING | 'type:' type=STRING)
+    ('src' '=' src=STRING | 'type:' type=STRING)
     (('region' '=' region=[Region]) | regionProperties+=RegionProperty*)
     (properties+=MediaProperty)*
 	(start ?= 'start')?
@@ -20,7 +19,7 @@ Media:
 ;
 
 MediaProperty:
-	'property:' name=mediaProperties 'value:' value=STRING
+	'property' name=ID '=' value=STRING
 ;
 
 RegionProperty:
@@ -55,10 +54,6 @@ enum Action:
 
 enum regionProperties: 
 	width | height | top | bottom | right | left | title | zIndex
-;
-
-enum mediaProperties: 
-	width | height | top | bottom | right | left | title | zIndex //agregar propiedades
 ;
 
 Condition:

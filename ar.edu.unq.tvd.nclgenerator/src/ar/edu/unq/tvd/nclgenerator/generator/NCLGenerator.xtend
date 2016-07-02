@@ -25,7 +25,6 @@ class NCLGenerator {
 		        «generateDescriptors»
 		        «generateConnectors»
 		    </head>
-		
 		    <body>
 		        «generatePorts»
 		        <media id="keys" type="application/x-ginga-settings">
@@ -41,11 +40,9 @@ class NCLGenerator {
 	def generateConnectors(){
 		'''		
 		<connectorBase>
-		
 			«FOR media: ncl.mediasWithEvents»
 			«media.addCausalConnector»
 			«ENDFOR»
-			
 		</connectorBase>
 		'''
 	}
@@ -63,7 +60,6 @@ class NCLGenerator {
 		'''
 		«FOR media: ncl.medias»
 		<media id="«media.FirstUpperName»" «media.addSrcOrType» «media.addDescriptor» «media.addProperties»
-		 
 		«ENDFOR»
 		'''
 	}
@@ -71,9 +67,9 @@ class NCLGenerator {
 	def generatePorts() {
 		'''
 		«FOR media: ncl.medias»
-		«IF media.isStart»
-			<port id="port«media.FirstUpperName»" component="«media.FirstUpperName»"/> 
-		«ENDIF»
+			«IF media.isStart»
+				<port id="port«media.FirstUpperName»" component="«media.FirstUpperName»"/> 
+			«ENDIF»
 		«ENDFOR»
 		'''
 	}
@@ -81,21 +77,22 @@ class NCLGenerator {
 	def generateRegions() {
 		'''
 		<regionBase>
-		«IF ncl.hasRegions»
-		«FOR region: ncl.regions»    <region id="«region.FirstUpperName»" «region.addProperties»/>
-		«ENDFOR»
-		«ENDIF»
-		
-		«generateMediaRegions»
-		
-		</regionBase>		
+			«IF ncl.hasRegions»
+				«FOR region: ncl.regions»	
+					<region id="«region.FirstUpperName»" «region.addProperties»/>
+				«ENDFOR»
+			«ENDIF»
+			«generateMediaRegions»
+		</regionBase>
 		'''
 	}
 	
 	def generateMediaRegions(){
 		'''
 		«FOR media: ncl.medias»
-		«IF !media.hasRegion»    <region id="Reg«media.FirstUpperName»" «media.addRegionProperties»/>«ENDIF»
+			«IF !media.hasRegion»    
+				<region id="Reg«media.FirstUpperName»" «media.addRegionProperties»/>
+			«ENDIF»
 		«ENDFOR»
 		'''
 	}
@@ -107,9 +104,7 @@ class NCLGenerator {
 		«FOR region: ncl.regions»    <descriptor id="desc«region.FirstUpperName»" region="«region.FirstUpperName»"/>
 		«ENDFOR»
 		«ENDIF»
-		
 		«generateMediaDesc»
-		
 		</descriptorBase>
 		'''
 	}
