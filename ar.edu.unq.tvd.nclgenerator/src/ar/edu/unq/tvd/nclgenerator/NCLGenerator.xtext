@@ -12,18 +12,18 @@ Media:
     'media' name=ID '{'
     ('src' '=' src=STRING | 'type:' type=STRING)
     (('region' '=' region=[Region]) | regionProperties+=RegionProperty*)
-    (properties+=MediaProperty)*
+    ('property' properties+=MediaProperty)*
 	(start ?= 'start')?
     (conditionActions+=CondtionAction)*
     '}'
 ;
 
 MediaProperty:
-	'property' name=ID '=' value=STRING
+	name=ID '=' value=STRING
 ;
 
 RegionProperty:
-	name=regionProperties '=' value=INT
+	name=ID '=' value=INT
 ;
 
 Region:
@@ -37,11 +37,27 @@ CondtionAction:
 ;
 
 SimpleAction:
-	action=Action ('('media=[Media]')')?
+	action=Action (media=[Media])?
 ;
 
 CompoundAction: {CompoundAction}
 	operator=Operator '['(simpleAction+=SimpleAction)*']'
+;
+
+Condition:
+	OnSelection | OnAction
+;
+
+OnSelection:
+	'onSelection' key=Key
+;
+
+OnAction:
+	condition=conditions (media=[Media])?
+;
+
+Key:
+	name=ID
 ;
 
 enum Operator:
@@ -52,26 +68,6 @@ enum Action:
 	 start | stop | set | abort | resume | pause
 ;
 
-enum regionProperties: 
-	width | height | top | bottom | right | left | title | zIndex
-;
-
-Condition:
-	OnSelection | OnStart | OnStop
-;
-
-OnSelection:
-	'onSelection' '('key=Key')'
-;
-
-OnStart:
-	'onStart' '('media=[Media]')'
-;
-
-OnStop:
-	'onStop' '('media=[Media]')'
-;
-
-enum Key:
-	BLUE | RED | GREEN | YELLOW | CURSOSR_DOWN | CURSOR_UP | CURSOR_LEFT | CURSOR_RIGHT //etc 
+enum conditions:
+	onStart | onEnd | onBegin | onPause | onResume | onAbort
 ;
