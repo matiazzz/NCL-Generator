@@ -3,10 +3,11 @@
  */
 package ar.edu.unq.tvd.nclgenerator.ui.contentassist
 
+import ar.edu.unq.tvd.nclgenerator.validation.DefaultData
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.RuleCall
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
-import org.eclipse.emf.ecore.EObject
 
 /**
  * See https://www.eclipse.org/Xtext/documentation/304_ide_concepts.html#content-assist
@@ -21,27 +22,21 @@ class NCLGeneratorProposalProvider extends AbstractNCLGeneratorProposalProvider 
 	}
 	
 	override complete_MediaProperty(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-		var proposals = newArrayList("background","balanceLevel","bassLevel","bottom","bounds", "explicitDur", "fit", "focusIndex", "fontColor", "fontFamily",
-			"fontSize", "fontStyle", "fontVariant", "fontWeight", "height", "left", "location", "plan", "playerLife", "reusePlayer",
-			"right", "scroll", "size", "soundLevel", "style", "top", "transparency", "trebleLevel", "visible", "width", "zIndex"
-		)
-		for(p : proposals){
+		for(p : DefaultData.mediaPropertiesList){
 			acceptor.accept(createCompletionProposal(p, context));
 			super.complete_MediaProperty(model, ruleCall, context, acceptor)
 		}
 	}
 	
 	override complete_RegionProperty(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-		var proposals = newArrayList("title","top","bottom","height","left","right","zIndex", "width")
-		for(p : proposals){
+		for(p : DefaultData.regionPropertiesList){
 			acceptor.accept(createCompletionProposal(p, context))
 		super.complete_RegionProperty(model, ruleCall, context, acceptor)
 		}
 	}
 	
 	override complete_Key(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-		var proposals = newArrayList("BLUE", "GREEN", "YELLOW", "RED", "CURSOSR_DOWN", "CURSOSR_UP", "CURSOSR_LEFT", "CURSOR_RIGHT")
-		for(p : proposals){
+		for(p : DefaultData.buttonsList){
 			acceptor.accept(createCompletionProposal(p, context))
 			super.complete_Key(model, ruleCall, context, acceptor) 
 		}

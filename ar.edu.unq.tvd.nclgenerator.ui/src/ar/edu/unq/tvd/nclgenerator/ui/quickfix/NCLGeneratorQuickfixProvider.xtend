@@ -46,7 +46,7 @@ class NCLGeneratorQuickfixProvider extends DefaultQuickfixProvider {
 	}
 	
 	@Fix(NCLGeneratorValidator.DUPLICATE_REGION_PROPERTY)
-	def deleteDuplicateProperty(Issue issue, IssueResolutionAcceptor acceptor){
+	def deleteDuplicateRegionProperty(Issue issue, IssueResolutionAcceptor acceptor){
 		acceptor.accept(issue, 'Delete duplicate property', 'Delete duplicate property.', '') [
 			context |
 			val xtetxDocument = context.xtextDocument

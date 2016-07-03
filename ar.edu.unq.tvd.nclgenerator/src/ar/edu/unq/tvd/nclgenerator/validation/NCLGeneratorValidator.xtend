@@ -11,6 +11,7 @@ import ar.edu.unq.tvd.nclgenerator.nCLGenerator.Region
 import static extension ar.edu.unq.tvd.nclgenerator.generator.RegionExtensions.*
 import static extension ar.edu.unq.tvd.nclgenerator.generator.MediaExtensions.*
 import ar.edu.unq.tvd.nclgenerator.nCLGenerator.RegionProperty
+import ar.edu.unq.tvd.nclgenerator.nCLGenerator.MediaProperty
 
 /**
  * This class contains custom validation rules. 
@@ -21,6 +22,7 @@ class NCLGeneratorValidator extends AbstractNCLGeneratorValidator {
 	
 	public static val DUPLICATE_NAME = 'duplicateName'
 	public static val DUPLICATE_REGION_PROPERTY = 'duplicateRegionProperty'
+	public static val DUPLICATE_MEDIA_PROPERTY = 'duplicateMediaProperty'
 
 	@Check
 	def checkExtencionDemas(NCL ncl){
@@ -49,7 +51,33 @@ class NCLGeneratorValidator extends AbstractNCLGeneratorValidator {
 				error('''Duplicate property '«property.name»' in Region.«name» ''', property, NCLGeneratorPackage.Literals.REGION_PROPERTY__NAME, DUPLICATE_REGION_PROPERTY)
 	}
 	
+	@Check
+	def checkForDuplicatePropertiesInMedia(Media it){
+		for (property : properties)
+			if(hasDuplicates(property))
+				error('''Duplicate property '«property.name»' in Media.«name» ''', property, NCLGeneratorPackage.Literals.MEDIA_PROPERTY__NAME, DUPLICATE_MEDIA_PROPERTY)
+	}
+	
+	@Check
+	def checkForValidPropertiesInRegion(Region it){
+		for(property: regionProperties){
+			if(!DefaultData.regionPropertiesList.contains(property.name))
+				warning('''It seems that '«property.name»' is not a valid property for Region.«name».''', property, null, null)
+		}
+	}
+	
+	@Check
+	def checkForValidPropertiesInMedia(Media it){
+		for(property: properties){
+			if(!DefaultData.mediaPropertiesList.contains(property.name))
+				warning('''It seems that '«property.name»' is not a valid property for Media.«name».''', property, null, null)
+		}
+	}
+	
 	def private hasDuplicates(Region it, RegionProperty property){
 		regionProperties.filter[p | p.name == property.name].size > 1
+	}
+	def private hasDuplicates(Media it, MediaProperty property){
+		properties.filter[p | p.name == property.name].size > 1
 	}
 }

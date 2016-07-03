@@ -23,7 +23,7 @@ MediaProperty:
 ;
 
 RegionProperty:
-	name=ID '=' value=INT
+	name=ID '=' value=STRING
 ;
 
 Region:
