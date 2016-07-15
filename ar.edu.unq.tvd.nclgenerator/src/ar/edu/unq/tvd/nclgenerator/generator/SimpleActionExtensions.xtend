@@ -9,6 +9,16 @@ class SimpleActionExtensions {
 	static def addBind(SimpleAction it, Media media){
 		var component = media.FirstUpperName
 		if(it.media != null) component = it.media.FirstUpperName
-		'''<bind role="«action»" component="«component»"/> '''
+		
+		if(isSet){
+			'''<bind role="set" component="«component»" interface="«set.property.name»"/> '''
+		}
+		else{
+			'''<bind role="«action»" component="«component»"/> '''
+		}
+	}
+	
+	static def isSet(SimpleAction it){
+		set != null
 	}
 }

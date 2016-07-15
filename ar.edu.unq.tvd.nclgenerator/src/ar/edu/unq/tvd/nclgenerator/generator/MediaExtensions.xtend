@@ -22,6 +22,11 @@ class MediaExtensions {
 			«FOR p: properties»
 			<property name="«p.name»" value="«p.value»"/>
 			«ENDFOR»
+			«IF hasPropertiesFromEvents»
+				«FOR property: propertiesFromEvents»	
+					<property name="«property»"/>
+				«ENDFOR»
+			«ENDIF»
 		</media>
 		'''
 		else
@@ -38,6 +43,10 @@ class MediaExtensions {
 	
 	def static hasProperties(Media it) {
 		!properties.empty
+	}
+	
+	def static hasProperty(Media it, String property){
+		properties.contains(property)
 	}
 	
 	static def addSrcOrType(Media it){
@@ -95,6 +104,26 @@ class MediaExtensions {
 			</link>
 		«ENDFOR»
 		'''
+	}
+	
+	static def hasPropertiesFromEvents(Media it){
+		propertiesFromEvents.size > 0
+	}
+	
+	/*
+	 * Return all the properties that not were declared in the media but 
+	 * are part of an event (set action).
+	 */
+	static def getPropertiesFromEvents(Media it){
+		var properties = newArrayList()
+		for (event : it.conditionActions) {
+			if (event.simpleAction.isSet){
+				if(!hasProperty(event.simpleAction.set.property.name))
+					properties.add(event.simpleAction.set.property.name)
+			}
+					
+		}
+		properties
 	}
 	
 }

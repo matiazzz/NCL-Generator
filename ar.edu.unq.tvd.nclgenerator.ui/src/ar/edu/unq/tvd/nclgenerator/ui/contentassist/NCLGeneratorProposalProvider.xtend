@@ -15,11 +15,11 @@ import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
  */
 class NCLGeneratorProposalProvider extends AbstractNCLGeneratorProposalProvider {
 	
-	override complete_Region(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-		var proposal = "region " + "name " + "{\n\n}"
-		acceptor.accept(createCompletionProposal(proposal, context));
-		super.complete_Region(model, ruleCall, context, acceptor)
-	}
+//	override complete_Region(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+//		var proposal = "region " + "name " + "{\n\n}"
+//		acceptor.accept(createCompletionProposal(proposal, context));
+//		super.complete_Region(model, ruleCall, context, acceptor)
+//	}
 	
 	override complete_MediaProperty(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		for(p : DefaultData.mediaPropertiesList){

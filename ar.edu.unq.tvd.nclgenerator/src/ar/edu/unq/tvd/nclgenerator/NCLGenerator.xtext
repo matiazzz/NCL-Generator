@@ -37,7 +37,7 @@ CondtionAction:
 ;
 
 SimpleAction:
-	action=Action (media=[Media])?
+	(action=Action | set=Set) (media=[Media])?
 ;
 
 CompoundAction: {CompoundAction}
@@ -58,6 +58,10 @@ OnAction:
 
 Key:
 	name=ID
+;
+
+Set:
+	'set' '('property=MediaProperty')'
 ;
 
 enum Operator:

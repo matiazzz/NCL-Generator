@@ -6,6 +6,6 @@ class DefaultData {
 			"fontSize", "fontStyle", "fontVariant", "fontWeight", "height", "left", "location", "plan", "playerLife", "reusePlayer",
 			"right", "scroll", "size", "soundLevel", "style", "top", "transparency", "trebleLevel", "visible", "width", "zIndex"
 		)
-	public static var buttonsList = newArrayList("BLUE", "GREEN", "YELLOW", "RED", "CURSOSR_DOWN", "CURSOSR_UP", "CURSOSR_LEFT", "CURSOR_RIGHT")
+	public static var buttonsList = newArrayList("BLUE", "GREEN", "YELLOW", "RED", "CURSOR_DOWN", "CURSOR_UP", "CURSOR_LEFT", "CURSOR_RIGHT")
 	
 }

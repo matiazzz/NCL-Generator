@@ -2,6 +2,8 @@ package ar.edu.unq.tvd.nclgenerator.generator
 
 import ar.edu.unq.tvd.nclgenerator.nCLGenerator.CondtionAction
 import static extension ar.edu.unq.tvd.nclgenerator.generator.ConditionExtensions.*
+import static extension ar.edu.unq.tvd.nclgenerator.generator.SimpleActionExtensions.*
+import ar.edu.unq.tvd.nclgenerator.nCLGenerator.SimpleAction
 
 class ConditionActionExtensions {
 	
@@ -10,10 +12,9 @@ class ConditionActionExtensions {
 	}
 	
 	static def addSimpleAction(CondtionAction it){
-		if (simpleAction != null)
-			'''
-			<simpleAction role="«simpleAction.action»"/>
-			'''
+		if (simpleAction != null){
+			simpleAction.add
+		}		
 	}
 	
 	static def addCompoundActions(CondtionAction it){
@@ -21,10 +22,23 @@ class ConditionActionExtensions {
 		'''		
 		<compoundAction operator="«compoundAction.operator»">		
 			«FOR sa: compoundAction.simpleAction»
-			<simpleAction role="«sa.action»"/>
+			 «sa.add»
 			«ENDFOR»
 		</compoundAction>
 		'''
+	}
+	
+	static def add(SimpleAction it){
+		if (isSet) {
+			'''
+			<simpleAction role="set" value="«set.property.value»"/>
+			'''
+		}
+		else{
+			'''
+			<simpleAction role="«action»"/>
+			'''
+		}
 	}
 	
 }
