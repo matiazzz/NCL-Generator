@@ -18,6 +18,10 @@ class SimpleActionExtensions {
 		}
 	}
 	
+	static def isSimpleAction(SimpleAction it){
+		true
+	}
+	
 	static def isSet(SimpleAction it){
 		set != null
 	}

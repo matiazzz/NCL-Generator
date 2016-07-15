@@ -9,10 +9,13 @@ class CompoundActionExtensions {
 	
 	static def addBinds(CompoundAction it, Media media){
 			'''
-			«FOR sa : simpleAction»
+			«FOR sa : simpleActions»
 			«sa.addBind(media)»
 			«ENDFOR»
-			'''
-			
+			'''	
+	}
+	
+	static def getPropertiesFromSimpleActions(CompoundAction it){
+		simpleActions.filter[simpleAction | simpleAction.isSet].map[simpleAction | simpleAction.set.property.name]
 	}
 }

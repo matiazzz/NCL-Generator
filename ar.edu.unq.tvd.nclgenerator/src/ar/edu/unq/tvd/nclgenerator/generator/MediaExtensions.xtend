@@ -16,17 +16,17 @@ class MediaExtensions {
 	}
 	
 	static def addProperties(Media it){
-		if(hasProperties)
+		if(hasProperties || hasPropertiesFromEvents)
 		'''
 		>
 			«FOR p: properties»
 			<property name="«p.name»" «IF !p.value.nullOrEmpty» value="«p.value»" «ENDIF»/>
 			«ENDFOR»
-«««			«IF hasPropertiesFromEvents»
-«««				«FOR property: propertiesFromEvents»	
-«««					<property name="«property»"/>
-«««				«ENDFOR»
-«««			«ENDIF»
+			«IF hasPropertiesFromEvents»
+				«FOR property: propertiesFromEvents»	
+					<property name="«property»"/>
+				«ENDFOR»
+			«ENDIF»
 		</media>
 		'''
 		else
@@ -116,13 +116,15 @@ class MediaExtensions {
 	static def getPropertiesFromEvents(Media it){
 		var properties = newArrayList()
 		for (event : it.conditionActions) {
-			if (event.simpleAction.isSet){
+			if (event.simpleAction != null && event.simpleAction.isSet){
 				if(!hasProperty(event.simpleAction.set.property.name))
 					properties.add(event.simpleAction.set.property.name)
 			}
-					
+			else if (event.compoundAction != null){
+				properties.addAll(event.compoundAction.propertiesFromSimpleActions)
+			}		
 		}
-		properties
+		properties.toSet
 	}
 	
 	static def isText(Media it){
