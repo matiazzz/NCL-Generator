@@ -50,10 +50,9 @@ class MediaExtensions {
 	}
 	
 	static def addSrcOrType(Media it){
-		if(hasSource)
-			'''src="«src»"'''
-		else
-			'''type="«type»"'''
+		if(hasSource){ '''src="«src»"''' }
+		else if(isText) '''src="«name»Text.txt"'''
+		else'''type="«type»"'''
 	}
 	
 	static def addDescriptor(Media it){
@@ -124,6 +123,10 @@ class MediaExtensions {
 					
 		}
 		properties
+	}
+	
+	static def isText(Media it){
+		text != null
 	}
 	
 }

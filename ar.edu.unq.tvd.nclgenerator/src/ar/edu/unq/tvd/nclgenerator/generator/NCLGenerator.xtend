@@ -5,6 +5,7 @@ import org.eclipse.xtext.generator.IFileSystemAccess
 import static extension ar.edu.unq.tvd.nclgenerator.generator.MediaExtensions.*
 import static extension ar.edu.unq.tvd.nclgenerator.generator.RegionExtensions.*
 import static extension ar.edu.unq.tvd.nclgenerator.generator.NCLExtensions.*
+import java.util.ArrayList
 
 class NCLGenerator {
 	
@@ -13,6 +14,10 @@ class NCLGenerator {
 	def generateNCL(IFileSystemAccess fsa, NCL ncl) {
 		this.ncl = ncl
 		fsa.generateFile(ncl.name + '.ncl', generate)
+		
+		for (mediaText : mediaTexts) {
+			fsa.generateFile(mediaText.name + '.txt', mediaText.text)
+		}
 	}
 	
 	def generate(){
@@ -35,6 +40,15 @@ class NCLGenerator {
 		    </body>
 		</ncl>
 		'''
+	}
+	
+	def getMediaTexts(){
+		var ArrayList<MediaText> mediaTexts = newArrayList()
+		for (media : ncl.medias) {
+			if(media.isText)
+				mediaTexts.add(new MediaText(media.name + "Text", media.text))
+		}
+		mediaTexts
 	}
 	
 	def generateConnectors(){
@@ -117,4 +131,14 @@ class NCLGenerator {
 		'''
 	}
 	
+}
+
+class MediaText {
+	public val String text
+	public val String name 
+	
+	new(String name, String text){
+		this.text = text
+		this.name = name
+	}
 }
