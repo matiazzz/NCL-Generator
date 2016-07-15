@@ -19,7 +19,7 @@ Media:
 ;
 
 MediaProperty:
-	name=ID '=' value=STRING
+	name=ID ('=' value=STRING)?
 ;
 
 RegionProperty:

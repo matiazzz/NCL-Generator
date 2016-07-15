@@ -20,13 +20,13 @@ class MediaExtensions {
 		'''
 		>
 			«FOR p: properties»
-			<property name="«p.name»" value="«p.value»"/>
+			<property name="«p.name»" «IF !p.value.nullOrEmpty» value="«p.value»" «ENDIF»/>
 			«ENDFOR»
-			«IF hasPropertiesFromEvents»
-				«FOR property: propertiesFromEvents»	
-					<property name="«property»"/>
-				«ENDFOR»
-			«ENDIF»
+«««			«IF hasPropertiesFromEvents»
+«««				«FOR property: propertiesFromEvents»	
+«««					<property name="«property»"/>
+«««				«ENDFOR»
+«««			«ENDIF»
 		</media>
 		'''
 		else
@@ -36,7 +36,7 @@ class MediaExtensions {
 	static def addRegionProperties(Media it){
 		'''
 		«FOR p: regionProperties»
-			«p.name» = "«p.value»%"
+			«p.name» = "«p.value»"
 		«ENDFOR»
 		'''
 	}
@@ -126,7 +126,7 @@ class MediaExtensions {
 	}
 	
 	static def isText(Media it){
-		text != null
+		! text.nullOrEmpty
 	}
 	
 }
