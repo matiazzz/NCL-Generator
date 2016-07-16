@@ -11,7 +11,7 @@ NCL:
 Media:
     'media' name=ID '{'
     ('src' '=' src=STRING | 'type' '=' type=STRING | 'text' '=' text=STRING)
-    (('region' '=' region=[Region]) | regionProperties+=RegionProperty*)
+    (('region' '=' region=[Region]?) | regionProperties+=RegionProperty*)
     ('property' properties+=MediaProperty)*
 	(start ?= 'start')?
     (conditionActions+=ConditionAction)*

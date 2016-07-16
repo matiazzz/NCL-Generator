@@ -92,8 +92,7 @@ class MediaExtensions {
 		'''
 		«FOR event : conditionActions»
 			<link xconnector="«name»«id++»">
-				<bind role="«event.condition.addRole»" component="«FirstUpperName»">
-			    </bind>
+				<bind role="«event.condition.addRole»" component="«FirstUpperName»"/>
 			    «IF event.simpleAction != null»
 			    «event.simpleAction.addBind(it)»
 			    «ENDIF»

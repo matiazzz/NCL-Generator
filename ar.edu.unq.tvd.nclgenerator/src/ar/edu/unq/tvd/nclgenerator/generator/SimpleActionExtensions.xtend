@@ -11,7 +11,11 @@ class SimpleActionExtensions {
 		if(it.media != null) component = it.media.FirstUpperName
 		
 		if(isSet){
-			'''<bind role="set" component="«component»" interface="«set.property.name»"/> '''
+			'''
+			<bind role="set" component="«component»" interface="«set.property.name»">
+				<bindParam name="var" value="«set.property.value»"/>
+			</bind>
+			'''
 		}
 		else{
 			'''<bind role="«action»" component="«component»"/> '''

@@ -3,6 +3,7 @@ package ar.edu.unq.tvd.nclgenerator.generator
 import ar.edu.unq.tvd.nclgenerator.nCLGenerator.ConditionAction
 import static extension ar.edu.unq.tvd.nclgenerator.generator.ConditionExtensions.*
 import static extension ar.edu.unq.tvd.nclgenerator.generator.SimpleActionExtensions.*
+import static extension ar.edu.unq.tvd.nclgenerator.generator.CompoundActionExtensions.*
 import ar.edu.unq.tvd.nclgenerator.nCLGenerator.SimpleAction
 
 class ConditionActionExtensions {
@@ -19,10 +20,11 @@ class ConditionActionExtensions {
 	
 	static def addCompoundActions(ConditionAction it){
 		if (compoundAction != null)
-		'''		
-		<compoundAction operator="«compoundAction.operator»">		
-			«FOR sa: compoundAction.simpleActions»
-			 «sa.add»
+		'''
+		<connectorParam name="var"/>
+		<compoundAction operator="«compoundAction.operator»">
+			«FOR simpleAction: compoundAction.simpleActionsNames»
+			«simpleAction.add»
 			«ENDFOR»
 		</compoundAction>
 		'''
@@ -31,7 +33,8 @@ class ConditionActionExtensions {
 	static def add(SimpleAction it){
 		if (isSet) {
 			'''
-			<simpleAction role="set" value="«set.property.value»"/>
+			<connectorParam name="var"/>
+			<simpleAction role="set" value="$var"/>
 			'''
 		}
 		else{
@@ -41,4 +44,16 @@ class ConditionActionExtensions {
 		}
 	}
 	
+	static def add(String action){
+		if (action == "set") {
+			'''
+			<simpleAction role="set" value="$var" max="unbounded"/>
+			'''
+		}
+		else{
+			'''
+			<simpleAction role="«action»" max="unbounded"/>
+			'''
+		}
+	}
 }
